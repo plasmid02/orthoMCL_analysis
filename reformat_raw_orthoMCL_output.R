@@ -24,6 +24,10 @@ plot(ortho_pca$rotation)
 ws_es <- filter(ortho_tbl,whale_ > 0,eleph_ > 0, V2 == 2) #num = 216
 not_in_ws <- filter(ortho_tbl,whale_ == 0, V2 == 10) #865
 not_in_es <- filter(ortho_tbl,eleph_ == 0, V2 == 10) #108
+not_in_lamp <- filter(ortho_tbl,lamp_ == 0, V2 == 10) #764
+not_in_lamp_and_ws <- filter(ortho_tbl,whale_ == 0,lamp_ == 0, V2 == 9) #543
+not_in_lamp_and_es <- filter(ortho_tbl,eleph_ == 0,lamp_ == 0, V2 == 9) #106
+
 ws_lamp <- filter(ortho_tbl,whale_ > 0,lamp_ > 0, V2 == 2) #num = 104
 ws_zebra <- filter(ortho_tbl,whale_ > 0,zebra_ > 0, V2 == 2) #num = 38
 ws_coel <- filter(ortho_tbl,whale_ > 0,coel_ > 0, V2 == 2) #num = 165
@@ -34,3 +38,11 @@ per_core <- filter(ortho_tbl,V2 == 11, V3 == 11)#155
 
 #gene lists
 ws_es_genes <- genes[unlist(ws_es[1] +1 ),][2]
+ # not in ws genes
+not_in_ws_genes <- genes[unlist(not_in_ws[1] + 1),]
+temp_list <- unlist(sapply(1:865, function(x) paste(not_in_ws_genes[x,], sep = "", collapse = " ")))
+r<- regexec("(zebra_.{5})", temp_list)
+zebra_genes <- unlist(regmatches(temp_list,r))
+
+not_in_ws_lamp_genes <- genes[unlist(not_in_lamp_and_ws[1] + 1),]
+temp_list <- unlist(sapply(1:543, function(x) paste(not_in_ws_lamp_genes[x,], sep = "", collapse = " ")))
